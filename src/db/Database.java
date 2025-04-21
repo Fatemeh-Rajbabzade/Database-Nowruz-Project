@@ -28,10 +28,12 @@ public class Database {
     }
 
     public static void delete(int id) throws EntityNotFoundException {
-        for (Entity e : entities) {
-            if (e.id == id)
-                entities.remove(e);
-            return;
+        int entitiesLength = entities.size();
+        for (int i = 0 ; i < entitiesLength ; i++){
+            if (entities.get(i).id == id){
+                entities.remove(i);
+                return;
+            }
         }
         throw new EntityNotFoundException(id);
     }
