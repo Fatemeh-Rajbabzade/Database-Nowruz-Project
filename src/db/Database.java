@@ -91,4 +91,16 @@ public class Database {
         }
         throw new EntityNotFoundException(e.id);
     }
-}
+
+    public static ArrayList<Entity> getAll(int entityCode) {
+        ArrayList<Entity> result = new ArrayList<>();
+
+        for (Entity e : entities) {
+            if (e.getEntityCode() == entityCode) {
+                //کپی برای محافظت از داده اصلی
+                result.add(e.copy());
+            }
+        }
+            return result;
+        }
+    }
