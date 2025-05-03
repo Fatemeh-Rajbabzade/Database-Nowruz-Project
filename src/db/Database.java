@@ -15,13 +15,15 @@ public class Database {
     //e موجودیت است
     public static void add(Entity e) {
         e.id = currentId++;
-        entities.add(e);
+        //کپی کردن entity
+        Entity copyEntity = e.copy();
+        entities.add(copyEntity);
     }
 
     public static Entity get(int id) throws EntityNotFoundException {
         for (Entity e : entities) {
             if (e.id == id)
-                return e;
+                return e.copy();
         }
         throw new EntityNotFoundException(id);
 
@@ -39,10 +41,13 @@ public class Database {
     }
 
     public static void update(Entity e) throws EntityNotFoundException {
+        //کپی کردن
+        Entity copyEntity = e.copy();
+
         int entitiesLength = entities.size();
         for (int i = 0; i < entitiesLength; i++) {
-            if (entities.get(i).id == e.id) {
-                entities.set(i, e);
+            if (entities.get(i).id == copyEntity.id) {
+                entities.set(i, copyEntity);
                 return;
             }
         }
