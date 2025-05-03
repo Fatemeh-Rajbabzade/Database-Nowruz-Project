@@ -4,6 +4,7 @@ import db.exception.EntityNotFoundException;
 import db.exception.InvalidEntityException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Database {
@@ -31,6 +32,14 @@ public class Database {
             validator.validate(e);
         }
         e.id = currentId++;
+        //Date for e
+        if (e instanceof Trackable){
+            Date currentDate = new Date();
+            Trackable trackable = (Trackable) e;
+            trackable.setCreationDate(currentDate);
+            trackable.setLastModificationDate(currentDate);
+        }
+
         //کپی کردن entity
         Entity copyEntity = e.copy();
         entities.add(copyEntity);
@@ -64,6 +73,15 @@ public class Database {
         if (validator != null) {
             validator.validate(e);
         }
+
+        //updated Date for e
+        if (e instanceof Trackable){
+            Date currentDate = new Date();
+            Trackable trackable = (Trackable) e;
+            //we need only updated time
+            trackable.setLastModificationDate(currentDate);
+        }
+
         int entitiesLength = entities.size();
         for (int i = 0; i < entitiesLength; i++) {
             if (entities.get(i).id == copyEntity.id) {
